@@ -1,0 +1,178 @@
+\documentclass{supervision}
+\usepackage{course}
+
+\begin{document}
+
+\begin{questions}
+    \question{What is the difference between $'a'$ and $"a"$?}
+    \begin{solution}
+    $'a'$ denotes a single character literal where as $"a"$ denotes a string literal (char array) containing 2 character literals (an $a$ and a null terminator).
+    \end{solution}
+
+    \question{Will the following terminate, and if so under what circumstances?}
+\begin{lstlisting}
+char i,j; for (i=0; i<10,j<5; i++,j++);
+\end{lstlisting}
+    \begin{solution}
+    The variable $j$ is not assigned to and thus the value it takes is implementation specific and can be simply garbage. The first part of the second expression ($i<10$) is unused and the for loop condition is simply $j<5$. The program will terminate whenever $j<5$ becomes $false$ which will always happen. The number of loops that will occur before the for loop exits is determined by the starting value of $j$ which is indeterminate.
+    \end{solution}
+
+    \question{}
+    \begin{parts}
+
+        \part{Write an implementation of bubble sort for a fixed array of integers.}
+        \\
+        \textit{An array of integers can be defined as \lstinline|int i[] = {1,2,3,4};| \\ The 2nd integer in an array can be printed using $printf("\%d \textbackslash n",i[1]);$.}
+        \begin{solution}
+            \lstinputlisting{./solutions-1/q3-a.c}
+        \end{solution}
+
+        % TODO refactor sizeof
+
+        \part{Modify your answer to the previous question to sort characters into lexicographical order.}
+        \\
+        \textit{The 2nd character in a character array i can be printed using $printf("\%c\textbackslash n",i[1]);$.}
+        \begin{solution}
+            \lstinputlisting{./solutions-1/q3-b.c}
+        \end{solution}
+    \end{parts}
+    \question{Write a function definition which matches the following declaration. The implementation should return the number of lower-case letters in a string}
+\begin{lstlisting}
+int cntlower(char str[]);
+\end{lstlisting}
+
+    \begin{solution}
+        \lstinputlisting{./solutions-1/q4.c}
+    \end{solution}
+    \question{Use function recursion to write an implementation of merge sort for a fixed array of integers; how much memory does your program use for a list of length n?}
+        \begin{solution}
+            \lstinputlisting{./solutions-1/q5.c}
+            It uses $O(n)$ space as it creates a new array of the same size.
+        \end{solution}
+    \question{}
+    \begin{parts}
+        \part{Define a macro $SWAP(t,x,y)$ that exchanges two arguments of type t.}
+
+        \begin{solution}
+            \lstinputlisting{./solutions-1/q6.c}
+        \end{solution}
+        \part{Does your macro work as expected for \lstinline|SWAP(int, v[i++], w[f(x)])|?}
+        \begin{solution}
+            It doesn't work properly, \lstinline|i++| has a side effect (incrementing $i$) and thus is not safe to use any more than once in the macro result. The same could be true for \lstinline|f(x)|.
+        \end{solution}
+
+        \part{What other invocations could cause a simple implementation to fail and how can we mitigate them?}
+        \begin{solution}
+        Not sure about other invocations (other than just others that have side effects). I think by using pointers to everything you should be able to mitigate this but cannot actually get this to work.
+        \end{solution}
+
+    \end{parts}
+    \question{Define a macro $SWAP(x,y)$ that exchanges two arguments of the same type (e.g. int or char) without using a temporary}
+    \begin{solution}
+        \lstinputlisting{./solutions-1/q7.c}
+    \end{solution}
+
+    \question{If $p$ is a pointer, what does \lstinline|p[-2]| mean? When is this legal?}
+    \begin{solution}
+    It references the array item that is two before the element pointed to by the $p$ pointer. It is always legal if $p$ is a pointer but if it is not pointing to an element in an array or if the index offset references an element that is out of bounds then you will get garbage.
+    \end{solution}
+
+    \question{Write a string search function with the following declaration which returns a pointer to the first occurrence of $s$ in $f$ (and \lstinline|NULL| otherwise)}
+    \begin{lstlisting}
+char *strfind(const char *s, const char *f);
+    \end{lstlisting}
+    \begin{solution}
+        \lstinputlisting{./solutions-1/q9.c}
+    \end{solution}
+    \question{If $p$ is a pointer to a structure, write some C code which uses all the following indirections and describe the action of each code snippet}
+    \begin{lstlisting}
+++p->i
+p++->i
+*p->i
+*p->i++
+(*p->i)++
+*p++->i
+    \end{lstlisting}
+    \begin{solution}
+        \lstinputlisting{./solutions-1/q10.c}
+    \end{solution}
+
+    \question{Write a program calc which evaluates a reverse Polish expression given on the command line; for example \$ calc 2 3 4 + * should print 14}
+    \begin{solution}
+        \lstinputlisting{./solutions-1/q11.c}
+    \end{solution}
+
+    \question{What is the value of i after executing each of the following:}
+    \begin{parts}
+        \part{i = sizeof(char);}
+        \begin{solution}
+        1
+        \end{solution}
+
+        \part{i = sizeof(int);}
+        \begin{solution}
+        4
+        \end{solution}
+        \part{int a; i = sizeof a;}
+        \begin{solution}
+        4
+        \end{solution}
+        \part{char b[5]; i = sizeof(b);}
+        \begin{solution}
+        5
+        \end{solution}
+        \part{char *c=b; i = sizeof(c);}
+        \begin{solution}
+        8
+        \end{solution}
+        \part{struct \{int d; char e;\} s; i = sizeof s;}
+        \begin{solution}
+        8
+        \end{solution}
+        \part{void f(int j[5]) \{ i = sizeof j;\}}
+        \begin{solution}
+        \textit{Couldn't get this to work}
+        \end{solution}
+        \part{void f(int j[][10]) { i = sizeof j;}}
+        \begin{solution}
+        \textit{Couldn't get this to work}
+        \end{solution}
+    \end{parts}
+    \question{Popular programming journal Obscure C Techniques for Experts has published a novel way to save space for a doubly-linked list program. Instead of storing two pointers (one next and one previous), this new technique stores a single value: the XOR of previous and next pointers.}
+    \begin{parts}
+        \part[15]{You have been engaged to provide code examples of this approach for publication.
+
+Ensure your code illustrates the creation and initialisation of such a list as well as the insertion, and deletion, of elements from such a list. Additionally, you must provide examples of a forward or backward traversal of the list permitting examination of each element in turn.}
+        \begin{solution}
+        \textit{Not sure on the whole concept here.}
+        \end{solution}
+
+        \part[5]{Comment on this form of linked list. Consider the comparative speed, memory overheads, maintenance and other advantages or disadvantages of the XOR doubly-linked list approach when compared with an approach that stores both previous and next pointers.}
+        \begin{solution}
+        The memory overhead is less as it only needs to store one pointer. A disadvantage is that debugging tools probably don't know how to traverse the list and this might hinder them. Also if pointer to an element is stored in another data structure then you can't use this to traverse the entire list (not actually sure about this but I can't see how you would be able to traverse the list from just the XOR without making wild assumptions about the location of the elements in memory).
+        \end{solution}
+
+    \end{parts}
+    \question{}
+    \begin{parts}
+
+        \part{According to the rules of pre and post increment what would you expect the following expressions to do:}
+\begin{lstlisting}
+i++ + ++i
+++i + ++i
+\end{lstlisting}
+    \begin{solution}
+        The first one should return $2i+1$ and $i$ should have the value $i+2$ afterwards. \\
+        The second one should return $2i+3$ and the value of $i$ afterwards should be $i+2$.
+    \end{solution}
+
+
+        \part{What actually happens if you try it?}
+        \begin{solution}
+        \lstinputlisting{./solutions-1/q14.c}
+        \end{solution}
+
+    \end{parts}
+
+\end{questions}
+\end{document}
