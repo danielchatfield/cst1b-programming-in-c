@@ -1,0 +1,121 @@
+\documentclass[NewMint]{supervision}
+\usepackage{course}
+
+\Supervision{2}
+
+\begin{document}
+\begin{questions}
+    \question
+    Write an implementation of a class \cppinline|LinkList| which stores zero or more positive integers internally as a linked list on the heap. The class should provide appropriate constructors and destructors and a method \cppinline|pop()| to remove items from the head of the list. The method \cppinline|pop()| should return \cppinline|-1| if there are no remaining items. Your implementation should override the copy constructor and assignment operator to copy the linked-list structure between class instances. You might like to test your implementation with the following:
+
+    \begin{minted}[gobble=4]{c}
+    int main() {
+        int test[] = {1,2,3,4,5};
+        LinkList l1(test+1,4), l2(test,5);
+        LinkList l3=l2, l4;
+        l4=l1;
+        printf("%d %d %d\n",l1.pop(),l3.pop(),l4.pop());
+        return 0;
+    }
+    \end{minted}
+
+    \textit{Hint: heap allocation \& deallocation should occur exactly once!}
+
+    \question
+    If a function $f$ has a static instance of a class as a local variable, when might the class constructor be called?
+
+    \question
+    Write a class \cppinline|Matrix| which allows a programmer to define $2 \times 2$ matrices. Overload the common operators (e.g. $+$, $-$, $*$, and $/$). Can you easily extend your design to matrices of arbitrary size?
+
+    \question
+    Write a class \cppinline|Vector| which allows a programmer to define a vector of length two. Modify your \cppinline|Matrix| and \cppinline|Vector| classes so that they interoperate correctly (e.g. \cppinline|v2 = m*v1| should work as expected).
+
+    \question
+    Why should destructors in an abstract class almost always be declared \cppinline|virtual|?
+
+    \question
+    Provide an implementation for: \cppinline|template<class T> T Stack<T>::pop();| and \cppinline|template<class T> Stack<T>::~Stack();| as declared in the slides for lecture 7.
+
+    \question
+    Provide an implementation for: \cppinline|Stack(const Stack& s);| and \\ \cppinline|Stack& operator=(const Stack& s);| as declared in the slides for lecture 7.
+
+    \question
+    Using meta programming, write a templated class \cppinline|Prime|, which evaluates whether a literal integer constant (e.g. $7$) is prime or not at compile time.
+
+    \question
+    How can you be sure that your implementation of class \cppinline|Prime| has been evaluated at compile time?
+
+    \question{2007 Paper 3 Question 4}
+
+    A C programmer is working with a little-endian machine with 8 bits in a byte and 4 bytes in a word. The compiler supports unaligned access and uses 1, 2 and 4 bytes to store \cppinline|char|, \cppinline|short| and \cppinline|int| respectively. The programmer writes the following definitions (code as written below) to access values in main memory (in the table below):
+    \begin{cppcode*}{gobble=4}
+    Address | Byte offset
+    ....... | 00 01 02 03
+    ________|_____________
+    0x04 .. | 10 00 00 00
+    0x08 .. | 61 72 62 33
+    0x0c .. | 33 00 00 00
+    0x10 .. | 78 0c 00 00 
+    0x14 .. | 08 00 00 00
+    0x18 .. | 01 00 4c 03
+    0x1c .. | 18 00 00 00
+
+    int **i=(int **)0x04;
+    short **pps=(short **)0x1c;
+    struct i2c {int i; char *c;}*p=(struct i2c*)0x10;
+    \end{cppcode*}
+
+    \begin{parts}
+        \part[8]{Write down the values for the following C expressions:}
+        \begin{cppcode*}{gobble=8}
+        **i 
+        p->c[2] 
+        &(*pps)[1] 
+        ++p->i
+        \end{cppcode*}
+        
+        \part[4]{Explain why the code shown below, when executed, will print the value $420$.}
+        \begin{cppcode*}{gobble=8}
+        #include<stdio.h>
+
+        #define init_employee(X,Y) {(X),(Y),wage_emp} 
+        typedef struct Employee Em; 
+        struct Employee {
+            int hours,salary;
+            int (*wage)(Em*);
+        };
+
+        int wage_emp(Em *ths) {
+            return ths->hours*ths->salary;
+        }
+
+        #define init_manager(X,Y,Z) {(X),(Y),wage_man,(Z)} 
+        typedef struct Manager Mn; 
+        struct Manager {
+            int hours,salary;
+            int (*wage)(Mn*);
+            int bonus;
+        }; 
+        int wage_man(Mn *ths){
+            return ths->hours*ths->salary+ths->bonus;
+        }
+
+        int main(void) { 
+            Mn m = init_manager(40,10,20); 
+            Em *e= (Em *) &m; 
+            printf("%d\n",e->wage(e)); 
+            return 0; 
+        }
+        \end{cppcode*}
+        
+        \part[8]{Rewrite the C code shown in \emph{part (b)} using C++ primitives and give four reasons why your C++ solution is better than the C one.}
+
+    \end{parts}
+
+
+\end{questions}
+
+
+
+
+\end{document}
