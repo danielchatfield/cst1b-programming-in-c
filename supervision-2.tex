@@ -67,7 +67,7 @@
     0x04 .. | 10 00 00 00
     0x08 .. | 61 72 62 33
     0x0c .. | 33 00 00 00
-    0x10 .. | 78 0c 00 00 
+    0x10 .. | 78 0c 00 00
     0x14 .. | 08 00 00 00
     0x18 .. | 01 00 4c 03
     0x1c .. | 18 00 00 00
@@ -80,18 +80,18 @@
     \begin{parts}
         \part[8]{Write down the values for the following C expressions:}
         \begin{cppcode*}{gobble=8}
-        **i 
-        p->c[2] 
-        &(*pps)[1] 
+        **i
+        p->c[2]
+        &(*pps)[1]
         ++p->i
         \end{cppcode*}
-        
+
         \part[4]{Explain why the code shown below, when executed, will print the value $420$.}
         \begin{cppcode*}{gobble=8}
         #include<stdio.h>
 
-        #define init_employee(X,Y) {(X),(Y),wage_emp} 
-        typedef struct Employee Em; 
+        #define init_employee(X,Y) {(X),(Y),wage_emp}
+        typedef struct Employee Em;
         struct Employee {
             int hours,salary;
             int (*wage)(Em*);
@@ -101,25 +101,25 @@
             return ths->hours*ths->salary;
         }
 
-        #define init_manager(X,Y,Z) {(X),(Y),wage_man,(Z)} 
-        typedef struct Manager Mn; 
+        #define init_manager(X,Y,Z) {(X),(Y),wage_man,(Z)}
+        typedef struct Manager Mn;
         struct Manager {
             int hours,salary;
             int (*wage)(Mn*);
             int bonus;
-        }; 
+        };
         int wage_man(Mn *ths){
             return ths->hours*ths->salary+ths->bonus;
         }
 
-        int main(void) { 
-            Mn m = init_manager(40,10,20); 
-            Em *e= (Em *) &m; 
-            printf("%d\n",e->wage(e)); 
-            return 0; 
+        int main(void) {
+            Mn m = init_manager(40,10,20);
+            Em *e= (Em *) &m;
+            printf("%d\n",e->wage(e));
+            return 0;
         }
         \end{cppcode*}
-        
+
         \part[8]{Rewrite the C code shown in \emph{part (b)} using C++ primitives and give four reasons why your C++ solution is better than the C one.}
 
     \end{parts}
