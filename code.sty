@@ -1,0 +1,26 @@
+\ProvidesPackage{code}
+
+\usepackage{listings}
+\usepackage{lstautogobble}
+\lstloadlanguages{C}
+
+\lstdefinestyle{mystyle}{%
+    basicstyle=\scriptsize\ttfamily,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    autogobble,
+    breaklines
+}
+
+\lstnewenvironment{cpp}[1][] {
+    \lstset{language=C++,
+        style=mystyle,
+        #1
+    }
+}{}
+
+\newcommand{\cppfile}[1]{
+    \lstinputlisting[language=C++,style=mystyle]{./solutions-\Supervision/q#1.cpp}
+}

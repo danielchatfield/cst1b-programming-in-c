@@ -1,5 +1,6 @@
-\documentclass[NewMint]{supervision}
+\documentclass[NewMinted]{supervision}
 \usepackage{course}
+\usepackage{code}
 
 \Supervision{2}
 
@@ -7,10 +8,10 @@
 % 10am on Wednesday 3rd December (i.e. before your last set of lectures).
 % In addition, please send me a zip file of your code via email in case we
 % want to try anything you've written.
-% 
+%
 % I propose we have a supervision at the following times on Thursday 4th
 % December in Robinson:
-% 
+%
 % 0930 Priyesh (pp384), Will (wes24)
 % 1030 Alex (ajb300), Jack (jhw52)
 % 1130 James (jdb83), Daniel (dc584)
@@ -18,9 +19,9 @@
 \begin{document}
 \begin{questions}
     \question
-    Write an implementation of a class \cppinline|LinkList| which stores zero or more positive integers internally as a linked list on the heap. The class should provide appropriate constructors and destructors and a method \cppinline|pop()| to remove items from the head of the list. The method \cppinline|pop()| should return \cppinline|-1| if there are no remaining items. Your implementation should override the copy constructor and assignment operator to copy the linked-list structure between class instances. You might like to test your implementation with the following:
+    Write an implementation of a class \lstinline|LinkList| which stores zero or more positive integers internally as a linked list on the heap. The class should provide appropriate constructors and destructors and a method \lstinline|pop()| to remove items from the head of the list. The method \lstinline|pop()| should return \lstinline|-1| if there are no remaining items. Your implementation should override the copy constructor and assignment operator to copy the linked-list structure between class instances. You might like to test your implementation with the following:
 
-    \begin{minted}[gobble=4]{c}
+    \begin{cpp}
     int main() {
         int test[] = {1,2,3,4,5};
         LinkList l1(test+1,4), l2(test,5);
@@ -29,38 +30,45 @@
         printf("%d %d %d\n",l1.pop(),l3.pop(),l4.pop());
         return 0;
     }
-    \end{minted}
+    \end{cpp}
 
     \textit{Hint: heap allocation \& deallocation should occur exactly once!}
 
+    \begin{solution}
+        \cppfile{1}
+    \end{solution}
+
     \question
     If a function $f$ has a static instance of a class as a local variable, when might the class constructor be called?
+    \begin{solution}
+        
+    \begin{solution}
 
     \question
-    Write a class \cppinline|Matrix| which allows a programmer to define $2 \times 2$ matrices. Overload the common operators (e.g. $+$, $-$, $*$, and $/$). Can you easily extend your design to matrices of arbitrary size?
+    Write a class \lstinline|Matrix| which allows a programmer to define $2 \times 2$ matrices. Overload the common operators (e.g. $+$, $-$, $*$, and $/$). Can you easily extend your design to matrices of arbitrary size?
 
     \question
-    Write a class \cppinline|Vector| which allows a programmer to define a vector of length two. Modify your \cppinline|Matrix| and \cppinline|Vector| classes so that they interoperate correctly (e.g. \cppinline|v2 = m*v1| should work as expected).
+    Write a class \lstinline|Vector| which allows a programmer to define a vector of length two. Modify your \lstinline|Matrix| and \lstinline|Vector| classes so that they interoperate correctly (e.g. \lstinline|v2 = m*v1| should work as expected).
 
     \question
-    Why should destructors in an abstract class almost always be declared \cppinline|virtual|?
+    Why should destructors in an abstract class almost always be declared \lstinline|virtual|?
 
     \question
-    Provide an implementation for: \cppinline|template<class T> T Stack<T>::pop();| and \cppinline|template<class T> Stack<T>::~Stack();| as declared in the slides for lecture 7.
+    Provide an implementation for: \lstinline|template<class T> T Stack<T>::pop();| and \lstinline|template<class T> Stack<T>::~Stack();| as declared in the slides for lecture 7.
 
     \question
-    Provide an implementation for: \cppinline|Stack(const Stack& s);| and \\ \cppinline|Stack& operator=(const Stack& s);| as declared in the slides for lecture 7.
+    Provide an implementation for: \lstinline|Stack(const Stack& s);| and \\ \lstinline|Stack& operator=(const Stack& s);| as declared in the slides for lecture 7.
 
     \question
-    Using meta programming, write a templated class \cppinline|Prime|, which evaluates whether a literal integer constant (e.g. $7$) is prime or not at compile time.
+    Using meta programming, write a templated class \lstinline|Prime|, which evaluates whether a literal integer constant (e.g. $7$) is prime or not at compile time.
 
     \question
-    How can you be sure that your implementation of class \cppinline|Prime| has been evaluated at compile time?
+    How can you be sure that your implementation of class \lstinline|Prime| has been evaluated at compile time?
 
     \question{2007 Paper 3 Question 4}
 
-    A C programmer is working with a little-endian machine with 8 bits in a byte and 4 bytes in a word. The compiler supports unaligned access and uses 1, 2 and 4 bytes to store \cppinline|char|, \cppinline|short| and \cppinline|int| respectively. The programmer writes the following definitions (code as written below) to access values in main memory (in the table below):
-    \begin{cppcode*}{gobble=4}
+    A C programmer is working with a little-endian machine with 8 bits in a byte and 4 bytes in a word. The compiler supports unaligned access and uses 1, 2 and 4 bytes to store \lstinline|char|, \lstinline|short| and \lstinline|int| respectively. The programmer writes the following definitions (code as written below) to access values in main memory (in the table below):
+    \begin{cpp}
     Address | Byte offset
     ....... | 00 01 02 03
     ________|_____________
@@ -75,19 +83,19 @@
     int **i=(int **)0x04;
     short **pps=(short **)0x1c;
     struct i2c {int i; char *c;}*p=(struct i2c*)0x10;
-    \end{cppcode*}
+    \end{cpp}
 
     \begin{parts}
         \part[8]{Write down the values for the following C expressions:}
-        \begin{cppcode*}{gobble=8}
+        \begin{cpp}
         **i
         p->c[2]
         &(*pps)[1]
         ++p->i
-        \end{cppcode*}
+        \end{cpp}
 
         \part[4]{Explain why the code shown below, when executed, will print the value $420$.}
-        \begin{cppcode*}{gobble=8}
+        \begin{cpp}
         #include<stdio.h>
 
         #define init_employee(X,Y) {(X),(Y),wage_emp}
@@ -118,7 +126,7 @@
             printf("%d\n",e->wage(e));
             return 0;
         }
-        \end{cppcode*}
+        \end{cpp}
 
         \part[8]{Rewrite the C code shown in \emph{part (b)} using C++ primitives and give four reasons why your C++ solution is better than the C one.}
 
@@ -126,8 +134,6 @@
 
 
 \end{questions}
-
-
 
 
 \end{document}
