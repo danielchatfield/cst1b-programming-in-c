@@ -18,8 +18,14 @@
 
 \begin{document}
 \begin{questions}
-    \question
-    Write an implementation of a class \lstinline|LinkList| which stores zero or more positive integers internally as a linked list on the heap. The class should provide appropriate constructors and destructors and a method \lstinline|pop()| to remove items from the head of the list. The method \lstinline|pop()| should return \lstinline|-1| if there are no remaining items. Your implementation should override the copy constructor and assignment operator to copy the linked-list structure between class instances. You might like to test your implementation with the following:
+  \question Write an implementation of a class \lstinline|LinkList| which
+    stores zero or more positive integers internally as a linked list on the
+    heap. The class should provide appropriate constructors and destructors
+    and a method \lstinline|pop()| to remove items from the head of the list.
+    The method \lstinline|pop()| should return \lstinline|-1| if there are no
+    remaining items. Your implementation should override the copy constructor
+    and assignment operator to copy the linked-list structure between class
+    instances. You might like to test your implementation with the following:
 
     \begin{cpp}
     int main() {
@@ -35,54 +41,78 @@
     \textit{Hint: heap allocation \& deallocation should occur exactly once!}
 
     \begin{solution}
-        \cppfile{q1.cpp}
+      \cppfile{q1.cpp}
     \end{solution}
 
-    \question
-    If a function $f$ has a static instance of a class as a local variable, when might the class constructor be called?
+  \question If a function $f$ has a static instance of a class as a local
+    variable, when might the class constructor be called?
     \begin{solution}
-
+      % TODO
     \end{solution}
 
-    \question
-    Write a class \lstinline|Matrix| which allows a programmer to define $2 \times 2$ matrices. Overload the common operators (e.g. $+$, $-$, $*$, and $/$). Can you easily extend your design to matrices of arbitrary size?
+  \question Write a class \lstinline|Matrix| which allows a programmer to
+    define $2 \times 2$ matrices. Overload the common operators (e.g. $+$,
+    $-$, $*$, and $/$). Can you easily extend your design to matrices of
+    arbitrary size?
+
     \begin{solution}
-        \cppfile{q3.h}
-        \noindent\rule{\linewidth}{0.4pt}
-        \cppfile{q3.cpp}
-        This cannot easily be extended to matrices of arbitrary size as the arithmetic operations only work for matrices of certain sizes. For operations that are valid (e.g. multiplication of two $3 \times 3$ matrices) the implementation would have to be modified to store the elements as a 2D array.
+      \cppfile{q3.h}
+      \noindent\rule{\linewidth}{0.4pt}
+      \cppfile{q3.cpp}
+      This cannot easily be extended to matrices of arbitrary size as the
+      arithmetic operations only work for matrices of certain sizes. For
+      operations that are valid (e.g. multiplication of two $3 \times 3$
+      matrices) the implementation would have to be modified to store the
+      elements as a 2D array.
     \end{solution}
 
-    \question
-    Write a class \lstinline|Vector| which allows a programmer to define a vector of length two. Modify your \lstinline|Matrix| and \lstinline|Vector| classes so that they interoperate correctly (e.g. \lstinline|v2 = m*v1| should work as expected).
-    \begin{solution}
+    \question Write a class \lstinline|Vector| which allows a programmer to
+      define a vector of length two. Modify your \lstinline|Matrix| and
+      \lstinline|Vector| classes so that they interoperate correctly (e.g.
+      \lstinline|v2 = m*v1| should work as expected).
+
+      \begin{solution}
         \cppfile{q4.cpp}
-    \end{solution}
+      \end{solution}
 
-    \question
-    Why should destructors in an abstract class almost always be declared \lstinline|virtual|?
+    \question Why should destructors in an abstract class almost always be
+      declared \lstinline|virtual|?
+      \begin{solution}
+        Otherwise when a class that inherits from it is casted back to the
+        abstract class then the destructor defined in the abstract class will
+        be called which may cause a memory leak if the inheriting class uses
+        more memory.
+      \end{solution}
+
+    \question Provide an implementation for:
+      \lstinline|template<class T> T Stack<T>::pop();| and
+      \lstinline|template<class T> Stack<T>::~Stack();| as declared in the
+      slides for lecture 7.
+      \begin{solution}
+        I initially wanted to do this by creating a destructor for the
+        \lstinline|Item| class but given it wasn't in the header file I
+        figured we were meant to do it this way.
+      \end{solution}
+
+    \question Provide an implementation for: \lstinline|Stack(const Stack& s);|
+      and \\ \lstinline|Stack& operator=(const Stack& s);| as declared in the
+      slides for lecture 7.
     \begin{solution}
-        Otherwise when a class that inherits from it is casted back to the abstract class then the destructor defined in the abstract class will be called which may cause a memory leak if the inheriting class uses more memory.
+      \cppfile{stack.h}
     \end{solution}
 
-    \question
-    Provide an implementation for: \lstinline|template<class T> T Stack<T>::pop();| and \lstinline|template<class T> Stack<T>::~Stack();| as declared in the slides for lecture 7.
-    \begin{solution}
-        \cppfile{q9.cpp}
-        I initially wanted to do this by creating a destructor for the \lstinline|Item| class but given it wasn't in the header file I figured we were meant to do it this way.
-    \end{solution}
+    \question Using meta programming, write a templated class
+      \lstinline|Prime|, which evaluates whether a literal integer constant
+      (e.g. $7$) is prime or not at compile time.
+      \begin{solution}
+        % TODO
+      \end{solution}
 
-    \question
-    Provide an implementation for: \lstinline|Stack(const Stack& s);| and \\ \lstinline|Stack& operator=(const Stack& s);| as declared in the slides for lecture 7.
-    \begin{solution}
-
-    \end{solution}
-
-    \question
-    Using meta programming, write a templated class \lstinline|Prime|, which evaluates whether a literal integer constant (e.g. $7$) is prime or not at compile time.
-
-    \question
-    How can you be sure that your implementation of class \lstinline|Prime| has been evaluated at compile time?
+    \question How can you be sure that your implementation of class
+      \lstinline|Prime| has been evaluated at compile time?
+      \begin{solution}
+        % TODO
+      \end{solution}
 
 
 \end{questions}
