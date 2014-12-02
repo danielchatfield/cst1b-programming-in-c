@@ -105,13 +105,17 @@
       \lstinline|Prime|, which evaluates whether a literal integer constant
       (e.g. $7$) is prime or not at compile time.
       \begin{solution}
-        % TODO
+        \cppfile{q8.cpp}
       \end{solution}
 
     \question How can you be sure that your implementation of class
       \lstinline|Prime| has been evaluated at compile time?
       \begin{solution}
-        % TODO
+        For templates that return an integer value you can use this to
+        initialise an array of that size, which can only be done if it was
+        executed at compile time.
+
+        For this one I'm not sure other than looking at the assembly.
       \end{solution}
 
 
