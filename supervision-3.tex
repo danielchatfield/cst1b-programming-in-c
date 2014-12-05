@@ -1,0 +1,95 @@
+\documentclass{supervision}
+\usepackage{course}
+\usepackage{code}
+
+\Supervision{3}
+
+\begin{document}
+\begin{questions}
+  \question A C programmer is working with a little-endian machine with 8 bits
+    in a byte and 4 bytes in a word. The compiler supports unaligned access and
+    uses 1, 2 and 4 bytes to store \cppinline|char|, \cppinline|short| and
+    \cppinline|int| respectively. The programmer writes the following
+    definitions (code as written below) to access values in main memory (in the
+    table below):
+
+    \begin{cpp}[gobble=6]
+      Address | Byte offset
+      ....... | 00 01 02 03
+      ________|_____________
+      0x04 .. | 10 00 00 00
+      0x08 .. | 61 72 62 33
+      0x0c .. | 33 00 00 00
+      0x10 .. | 78 0c 00 00
+      0x14 .. | 08 00 00 00
+      0x18 .. | 01 00 4c 03
+      0x1c .. | 18 00 00 00
+
+      int **i=(int **)0x04;
+      short **pps=(short **)0x1c;
+      struct i2c {int i; char *c;}*p=(struct i2c*)0x10;
+    \end{cpp}
+
+    \begin{parts}
+      \part[8] Write down the values for the following C expressions:
+        \begin{cpp}[gobble=8]
+          **i
+          p->c[2]
+          &(*pps)[1]
+          ++p->i
+        \end{cpp}
+
+      \part[4] Explain why the code shown below, when executed, will print the
+        value $420$.
+        \begin{cpp}]gobble=8]
+          #include<stdio.h>
+
+          #define init_employee(X,Y) {(X),(Y),wage_emp}
+          typedef struct Employee Em;
+          struct Employee {
+          int hours,salary;
+          int (*wage)(Em*);
+          };
+
+          int wage_emp(Em *ths) {
+          return ths->hours*ths->salary;
+          }
+
+          #define init_manager(X,Y,Z) {(X),(Y),wage_man,(Z)}
+          typedef struct Manager Mn;
+          struct Manager {
+          int hours,salary;
+          int (*wage)(Mn*);
+          int bonus;
+          };
+          int wage_man(Mn *ths){
+          return ths->hours*ths->salary+ths->bonus;
+          }
+
+          int main(void) {
+          Mn m = init_manager(40,10,20);
+          Em *e= (Em *) &m;
+          printf("%d\n",e->wage(e));
+          return 0;
+          }
+        \end{cpp}
+
+      \part[8] Rewrite the C code shown in \emph{part (b)} using C++ primitives
+        and give four reasons why your C++ solution is better than the C one.
+    \end{parts}
+
+  \question Rewrite your \lstinline|Matrix| class to use templates to determine
+    the dimensions. You should implement functions for $+$,$-$ and $*$ making
+    sure that they return matrices of the correct dimensions. Give typedef's to
+    define \lstinline|Matrix| and \lstinline|Vector| as before.
+
+  \question C++11 added rvalue references to help programmers avoid unnecessary
+    copying of objects. Find out what this means and write an explanation
+    including an example which demonstrates that copying has been avoided. You
+    might like to start here: \url{http://www.artima.com/cppsource/rvalue.html}
+
+    \emph{Note: that for g++ you need to pass the switch -std=c++11 to enable
+    C++11 features}
+
+\end{questions}
+\end{document}
