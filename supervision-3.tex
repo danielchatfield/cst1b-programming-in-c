@@ -32,12 +32,38 @@
 
     \begin{parts}
       \part[8] Write down the values for the following C expressions:
-        \begin{cpp}[gobble=8]
-          **i
-          p->c[2]
-          &(*pps)[1]
-          ++p->i
-        \end{cpp}
+        \begin{subparts}
+          \subpart \lstinline|**i|
+            % This is wrong (didn't read the question properly!). 
+            %
+            % \begin{solution}
+            %   $i$ is initialised as a double pointer to an int by casting the
+            %   integer \lstinline|0x04| to an int double pointer. This means
+            %   that $i$ points to memory address \lstinline|0x04|. When trying
+            %   to dereference it, a memory access violation will likely occur
+            %   (causing a segmentation fault) since \lstinline|0x04| is an
+            %   arbitrary address. If no memory access violation occurs during
+            %   each of the two dereferences then the result will be garbage.
+            % \end{solution}
+            \begin{solution}
+              $i$ is initialised as a double pointer to an \lstinline|int| by 
+              casting \lstinline|0x04| to an integer double pointer. When this 
+              is double dereferenced the value stored in \lstinline|0x04| is 
+              interpreted as a memory address (\lstinline|0x10|) and then the 
+              int is read from there. Since this is a little-endian machine and 
+              4 bytes are used to store an int the resulting integer is 
+              \lstinline|0x00000c78| ($3192$).
+            \end{solution}
+          \subpart \lstinline|p->c[2]|
+            \begin{solution}
+              \lstinline|0x00|
+            \end{solution}
+          \subpart \lstinline|&(*pps)[1]|
+            \begin{solution}
+
+            \end{solution}
+          \subpart \lstinline|++p->i|
+        \end{subparts}
 
       \part[4] Explain why the code shown below, when executed, will print the
         value $420$.
